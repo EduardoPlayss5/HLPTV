@@ -10,17 +10,23 @@
         <label for="udata">URL: </label>
         <input id="udata" type="text" placeholder="M3U Url" />
     </div>
-    <button id="load">Save & Load</button>
+    <button id="clp">Try with Clappr player!</button>
+    <button id="load">Save & Load (Hls.js)</button>
 </body>
 
 <script>
     const button = document.getElementById("load");
+    const btn2 = document.getElementById("clp");
 
     button.addEventListener("click", () => {
         var urlv = document.getElementById("udata").value;
 
         const ec = encodeURIComponent(urlv);
         window.location.href = `demo.html?urlf=${ec}`;
+    });
+
+    btn2.addEventListener("click", () => {
+        window.location.href = "clappr_ln.html";
     });
 </script>
 
