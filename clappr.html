@@ -3,158 +3,472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Clappr.io Player</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"
+    />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/apple-touch-icon.png">
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/img/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./assets/img/android-chrome-512x512.png">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon-16x16.png">
+
+    <link rel="shortcut icon" href="./assets/img/favicon.ico">
+    
+    <meta name="Author" content="Eduardo (2023 - EduardoPlays)">
+    <meta name="Keywords" content="online-player, streamplayer, webplayer, browser-player, javascript-player, html5-player-js, css-js-html5-player">
+    <meta name="Description" content="Play HLS Streams and More on your browser!">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Clappr.io Embedded Player">
+    <meta property="og:description" content="Play Streams and More on your browser!">
+    <meta property="og:image" content="http://cloud.githubusercontent.com/assets/244265/6373134/a845eb50-bce7-11e4-80f2-592ba29972ab.png">
+    <meta property="og:image:secure_url" content="https://cloud.githubusercontent.com/assets/244265/6373134/a845eb50-bce7-11e4-80f2-592ba29972ab.png">
+    <meta property="og:image:width" content="256">
+    <meta property="og:image:height" content="256">
+    <meta property="og:image:alt" content="Clappr.io Player">
     <style>
-        #status {
-            display: none;
-            border: 2px dashed #000;
+        #wrong-text{
+            color: red;
+            text-decoration: line-through;
         }
+		
+		#new-text{
+		    font-weight: bolder;
+		}
+		
+		#testvideo {
+		    background-color: rgb(181, 222, 255);
+			color: #000;
+		}
     </style>
 </head>
-<body>
-    <div class="guide">
-        <p>Guide:</p>
-        <p>Press two times on screen to fullscreen and exit fullscreen.</p>
-        <p>Button "Play" plays the video, the button, same to the "a" btn</p>
-        <p>Button "Pause" pause the video, the button, same to the "s" btn</p>
-        <p>That's it!</p>
+<body class="">
+    <div class="header-container">
+        <header class="wrapper clearfix">
+            <h1>
+                <a target="_blank" href="https://clappr.io/">
+                    <img src="https://cloud.githubusercontent.com/assets/244265/6373134/a845eb50-bce7-11e4-80f2-592ba29972ab.png" />
+                </a>
+            </h1>
+
+            <h2 class="title">release <a href="https://github.com/clappr/clappr/releases/tag/0.5.0">0.5.0</a></h2>
+
+            <h3>
+                <a href="https://clappr.github.io/">API Docs | usage guide</a>
+            </h3>
+
+            <div class="toggle-theme-container">
+                <label class="switch">
+                    <input type="checkbox" class="btn-act" id="toggleButtonTheme">
+                    <span class="slider"></span>
+                </label>
+                <p id="status">Dark Theme Off</p>
+            </div>
+
+            <button onclick="javascript:history.back()" class="btn">Go back</button>
+        </header>
     </div>
-    <div id="player">
+
+    <div class="main-container">
+        <header>
+            <p>
+                <span id="wrong-text">Test</span> <span id="new-text">Play</span> your M3U8 streams in all supported browsers<br>
+                <a href="supported.html">Browsers List</a>
+            </p>
+        </header>
+        <div id="controls">
+            <div class="demo-controls-wrapper">
+                <label id="testvideo">Big Buck Bunny (Adaptive Qualities)</label><br>
+                <label for="streamURL">URL:</label>
+                <input type="text" id="streamURL" class="innerControls" value="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"/>
+                <button class="btn" onclick="javascript:toggleButtonsMenu(true)">Show Buttons</button>
+                <button class="btn" onclick="javascript:toggleButtonsMenu(false)">Hide Buttons</button>
+
+                <label class="innerControls">
+                    HTML video element width:
+                    <select id="videoSize" style="float: right">
+                        <option value="426">426px</option>
+                        <option value="640">640px</option>
+                        <option value="720">720px (Recommended)</option>
+                        <option value="854">854px</option>
+                        <!-- <option value="1280">1280px</option>
+                        <option value="1920">1920px</option>
+                        <option value="80%">Responsive (80%)</option>
+                        <option value="100%">Responsive (100%)</option> -->
+                    </select>
+                </label>
+
+                <label class="innerControls">
+                    Player size:
+                    <span id="currentSize"></span>
+                </label>
+                <button name="config-apply" class="btn" onclick="javascript:applyConfigEditorValue()">
+                  Apply
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="controls">
-        <button onclick="javascript:playBtn()">Play</button>
-        <button onclick="javascript:pauseBtn()">Pause</button>
-        <button onclick="javascript:showStatus(true)">Show Debug</button>
-        <button onclick="javascript:showStatus(false)">Hide Debug</button>
+    <div id="videoClass" class="videoCentered"></div>
+    <br />
+    <br />
+    <div 
+      class="center"
+      style="text-align: center; display: none"
+      id="toggleButtons"
+    >
+      <button 
+        type="button"
+        class="btn btn-play"
+        onclick="javascript:playPlayer()"  
+      >Play</button>
+       <button
+         type="button"
+         class="btn btn-remove"
+         onclick="javascript:deletePlayer()"
+       >Delete (Remove)</button>
+       <button
+         type="button"
+         class="btn btn-pause"
+         onclick="javascript:pausePlayer()"
+       >Pause</button>
+       <button
+         type="button"
+         class="btn btn-theme-dark2"
+         onclick="javascript:toggleThemeDark2()"
+        >Theme dark2</button>
     </div>
-
-    <div id="status"></div>
-    <!-- Clappr.io script -->
-    <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
-    
-    <!-- Player.js with Controls.js scripts-->
-    <script>
-        var param = new URL(window.location.href);
-        var urlf = param.searchParams.get("url");
-        var timenow = new Date();
-        var stl = document.getElementById("status");
-        let player;
-        let playing;
-        let statusDisplayed;
-
-        statusDisplayed = false;
-
-        playing = false;
-
-        // Status config
-        function getStatusTime(){
-            var h = timenow.getHours();
-            var m = timenow.getMinutes();
-            var s = timenow.getSeconds();
-
-            if (h <= 10) h = '0' + h;
-
-            if (m <= 10) m = '0' + m;
-
-            if (s <= 10) s = '0' + s;
-
-            return `${h}:${m}:${s}`;
-        }
-
-        function statusMsg(time, msg){
-            stl.innerHTML += `<p>[${time}]: ${msg}</p>`;
-        }
-
-        // Show status
-        function showStatus(s){
-            var t = document.getElementById("status");
-            if (s == true && statusDisplayed == false) {
-                statusDisplayed = true;
-                t.style.display = "block";
-            } else if (s == false && statusDisplayed == true) {
-                statusDisplayed = false;
-                t.style.display = "none";
-            }
-        }
-
-        // load url
-        function loadURL(){
-            const n = getStatusTime();
-            statusMsg(n, `Decoding URL: ${urlf}`);
-            var decode = decodeURIComponent(urlf)
-            
-            player = new Clappr.Player({
-                source: decode,
-                parentId: '#player',
-                width: '640px',
-                height: '360px',
-            });
-            statusMsg(n, "Player Loaded");
-        }
-
-        // Buttons (html) binds
-        function playBtn(){
-            const n = getStatusTime();
-            if (playing == false) {
-                playing = true;
-                player.play();
-                statusMsg(n, "Player is Playing");
-            } else if (playing == true) {
-                console.error("Player.js: Already Playing!");
-                statusMsg(n, "Tried to Play already Playing!");
-            }
-        }
-
-        function pauseBtn(){
-            const n = getStatusTime();
-            if (playing == true) {
-                playing = false;
-                player.pause();
-                statusMsg(n, "Player Paused");
-            } else if (playing == false) {
-                console.error("Player.js: Already Paused!");
-                statusMsg(n, "Tried to Pause already Paused!");
-            }
-        }
-
-        // Buttons keybinds
-        document.addEventListener('keydown', (event) => {
-            switch(event.key){
-                case 'a':
-                    if (playing == false) {
-                        statusMsg(getStatusTime(), "Player Playing");
-                        playing = true;
-                        player.play();
-                    } else if (playing == true) {
-                        statusMsg(getStatusTime(), "Tried to Play already Playing!");
-                        console.error("Already Playing!");
-                    }
-                    break;
-                case 's':
-                    if (playing == true) {
-                        statusMsg(getStatusTime(), "Player Paused");
-                        playing = false;
-                        player.pause();
-                    } else if (playing == false) {
-                        statusMsg(getStatusTime(), "Tried to Pause already Paused!");
-                        console.error("Already Paused!");
-                    }
-                    break;
-            }
-        });
-
-        // Main function
-        function main(){
-            loadURL();
-        }
-
-        // Calling main function and printing if this loads
-        document.addEventListener("DOMContentLoaded", () => {
-            console.info("Clappr.io player");
-            console.info("HLPTV v1.0.0");
-            main();
-        });
-    </script>
 </body>
+
+<script>
+class Player {
+    constructor(width, div, streamURL){
+        this.w = width;
+        this.s = div;
+        this.u = streamURL;
+        this.init = true;
+        this.initializedPlayer = false;
+        this.player = '';
+        this.playing = false;
+    }
+
+    newPlayer(){
+        if (this.init && !this.initializedPlayer){
+            var playerConfig = {
+                source: this.u,
+                parentId: this.s,
+                width: this.w,
+                height: '560',
+                watermark: "./assets/img/watermark.png", position: 'bottom-right',
+                watermarkLink: "home.html"
+            };
+
+            var player = new Clappr.Player(playerConfig);
+            this.initializedPlayer = true;
+
+            this.player = player;
+        } else if (!this.init){
+            console.error("Not inited yet!");
+        } else if (this.initializedPlayer) {
+            console.error("Already initialized player");
+        }
+    }
+
+    play(){
+        if (this.init && this.initializedPlayer && !this.playing){
+            this.playing = true;
+            this.player.play();
+        } else if (!this.init){
+            console.error("Not initialized yet!");
+        } else if (!this.initializedPlayer){
+            console.error("Player not initialized!");
+        } else if (this.playing){
+            console.error("Already playing!");
+        }
+    }
+
+    removePlayer(){
+        if(this.init && this.initializedPlayer){
+            const element = document.getElementById("videoClass");
+            element.innerHTML = "";
+        } else if (!this.init){
+            console.error("Not initialized yet!");
+        } else if (!this.initializedPlayer){
+            console.error("Cloud cannot find the player to remove.");
+        }
+    }
+
+    pause(){
+        if (this.init && this.initializedPlayer && this.playing){
+            this.playing = false;
+            this.player.pause();
+        } else if (!this.init){
+            console.error("Not initialized yet!");
+        } else if (!this.initializedPlayer){
+            console.error("Player not initialized!");
+        } else if (this.playing){
+            console.error("Already paused!");
+        }
+    }
+}
+</script>
+
+<script>
+var instancePlayer;
+
+function applyConfigEditorValue(){
+    var selectedPlayerWidth = document.getElementById('videoSize').value;
+    var streamURL = document.getElementById('streamURL').value;
+
+    if (streamURL !== "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"){
+        var t = document.getElementById("testvideo");
+        t.remove();
+    }
+
+    instancePlayer = new Player(selectedPlayerWidth, '#videoClass', streamURL);
+    instancePlayer.newPlayer();
+}
+
+function pausePlayer(){
+    if (instancePlayer !== undefined){
+        instancePlayer.pause();
+    } else {
+        console.error("Please Init player first!");
+    }
+}
+
+function playPlayer(){
+    if (instancePlayer !== undefined){
+        instancePlayer.play();
+    } else {
+        console.error("Please Init player first!");
+    }
+}
+
+function deletePlayer(){
+    if (instancePlayer !== undefined){
+        instancePlayer.removePlayer();
+    } else {
+        console.error("Please Init player first!");
+    }
+}
+
+function toggleThemeDark2(){
+    document.body.classList.toggle("dark");
+}
+
+function toggleButtonsMenu(d){
+    if (d){
+        document.getElementById("toggleButtons").style.display = "block";
+    } else if (!d){
+        document.getElementById("toggleButtons").style.display = "none";
+    }
+}
+</script>
+
+<script>
+    const params = new URL(window.location.href);
+    const srcparam = params.searchParams.get("src");
+
+    if (srcparam !== null){
+        const inp = document.getElementById("streamURL");
+        inp.value = decodeURIComponent(srcparam);
+    }
+</script>
+
+<script>
+    document.getElementById("videoSize").addEventListener('change', () => {
+        const now = document.getElementById('videoSize').value;
+        document.getElementById("currentSize").innerHTML = `<span id="boldtext">${now}</span>x<span id="boldtext">560</span>`
+    });
+</script>
+
+
+<script>
+    function themeDark(){
+        document.body.classList.add('dark-theme');
+    }
+
+    function themeWhite(){
+        document.body.classList.remove('dark-theme')
+    }
+
+    const toggleButton = document.getElementById('toggleButtonTheme');
+    const status = document.getElementById('status');
+
+    toggleButton.addEventListener('change', (event) => {
+        if (event.target.checked){
+            status.textContent = "Dark Theme On";
+            themeDark();
+        } else {
+            status.textContent = "Dark Theme Off";
+            themeWhite();
+        }
+    });
+</script>
+
+<style>
+    .dark-theme {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .dark-theme h1, .dark-theme h2, .dark-theme h3, .dark-theme p {
+        color: #ffffff;
+    }
+
+    .dark-theme .btn {
+        background-color: #343a40;
+        color: #000;
+        border-color: #343a40;
+        transition: 0.8s background-color initial;
+    }
+
+    .dark-theme .btn:hover, .dark-theme #videoSize {
+        background-color: #2c3033;
+        border-color: #2c3033;
+        color: #ffffff;
+    }
+
+    .dark-theme #videoSize:hover {
+        background-color: #2c3033;
+        border-color: #2c3033;
+        color: #ffffff;
+    }
+
+    .dark-theme #streamURL {
+        color: #000;
+    }
+
+    .dark-theme #videoSize {
+        color: #ffffff;
+        border: 1px solid #ffffff;
+    }
+
+    .dark-theme .innerControls select {
+        padding: 6px;
+    }
+</style>
+
+<style>
+.toggle-theme-container {
+    text-align: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider::before{
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.btn-act:checked + .slider {
+    background-color: #2196F3;
+}
+
+.btn-act:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.btn-act:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+#status {
+    margin-top: 10px;
+    font-weight: bold;
+}
+</style>
+
+<style>
+    .dark {
+        color: #ddd;
+        background-color: #111;
+    }
+
+    .dark button,
+    .dark select {
+        background-color: rgb(0, 40, 70);
+    }
+
+    .dark input {
+        background-color: #222;
+    }
+
+    .dark label {
+        font-weight: initial;
+    }
+
+    .dark a {
+        color: #337ab7;
+    }
+
+    .dark pre {
+        background-color: #050505;
+        border-color: #333;
+        color: #ccc;
+    }
+
+    .dark button.btn {
+        color: #050505;
+    }
+</style>
+
+<script>
+    const params2 = new URL(window.location.href);
+    const themeNow = params2.searchParams.get("theme");
+
+    if (themeNow == 'dark'){
+        document.getElementById("toggleButtonTheme").checked = "true";
+        document.body.classList.toggle("dark-theme");
+    }
+</script>
+
 </html>
