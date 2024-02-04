@@ -35,6 +35,7 @@ m3u8 (Recommended)
 
 # Keyboard key binds (Clappr Player Only)
 'a' plays the video
+
 's' pauses the video
 
 # More
