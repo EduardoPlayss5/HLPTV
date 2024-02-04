@@ -1,0 +1,126 @@
+header {
+    text-align: center;
+}
+
+select {
+    padding: 2px 15px;
+    background-color: rgb(181, 222, 255);
+    font-weight: 600;
+    padding: 5px 0;
+}
+
+select option {
+    font-size: 11px;
+}
+
+.innerControls input {
+    font-weight: normal;
+    float: right;
+}
+
+#boldtext{
+    font-weight: bolder;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #ddd;
+        background-color: #111;
+    }
+
+    button,
+    select {
+        background-color: rgb(0, 40, 70);
+    }
+
+    input {
+        background-color: #222;
+    }
+
+    label {
+        font-weight: initial;
+    }
+
+    a {
+        color: #337ab7;
+    }
+
+    pre {
+        background-color: #050505;
+        border-color: #333;
+        color: #ccc;
+    }
+
+    button.btn {
+        color: #050505;
+    }
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    border: 1px solid #606060;
+    overflow: hidden;
+}
+
+.demo-controls-wrapper {
+    flex: 1 1 auto;
+    max-width: 100%;
+    padding: 5px 5px 0 3px;
+}
+
+.innerControls {
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    justify-content: space-between;
+}
+
+.videoCentered {
+    width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.center {
+    width: 70%;
+    min-width: 615px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#toggleButtons button {
+    width: 16%;
+    display: inline-block;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bolder;
+    background-color: rgb(181, 222, 255);
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#streamURL {
+    width: calc(100% - 4px);
+    margin-left: 3px;
+    margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+    #controls {
+        flex-direction: row;
+    }
+
+    .demo-controls-wrapper {
+        max-width: 50%;
+    }
+}
