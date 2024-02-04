@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-data {
+            text-align: center;
+        }
+
+        #streamURL {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        #submit-btn {
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Media URL Shrinker</h1>
+    <div class="form-data">
+        <button onclick="javascript:history.back()">Go Back</button>
+        <input type="url" id="streamURL" placeholder="Media Link:" required/>
+        <br>
+        <label for="theme-dark-on">Dark Theme</label>
+        <input type="checkbox" id="theme-dark-on">
+        <button id="submit-btn" onclick="javascript:submit()">Submit</button>
+        <p>Dark Theme: <span id="status-th">Off</span></p>
+    </div>
+
+    <script>
+        const btn = document.getElementById("submit-btn");
+        let theme;
+        theme = false;
+
+        function submit(){
+            if (theme){
+                const fdata = document.getElementById("streamURL").value;
+                window.location.href = `player.html?src=${encodeURIComponent(fdata)}&theme=dark`;
+            } else {
+                const fdata = document.getElementById("streamURL").value;
+                window.location.href = `player.html?src=${encodeURIComponent(fdata)}`;
+            }
+        }
+    </script>
+
+    <script>
+        const f = document.getElementById("theme-dark-on");
+
+        f.addEventListener("change", (event) => {
+            if (event.target.checked){
+                document.getElementById("status-th").textContent = "On";
+                theme = true;
+            } else {
+                document.getElementById("status-th").textContent = "Off";
+                theme = false;
+            }
+        })
+    </script>
+</body>
+</html>
