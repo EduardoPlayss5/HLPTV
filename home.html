@@ -3,31 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Clappr Player Experience</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .main-site {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #4caf50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666666;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #italic {
+            font-style: italic;
+            font-weight: bold;
+            color: #009688;
+        }
+
+        a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4caf50;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <div id="form-data_m3u">
-        <label for="udata">URL: </label>
-        <input id="udata" type="text" placeholder="M3U Url" />
+    <div class="main-site">
+        <button onclick="javascript:history.back()">Go Back</button>
+        <h1>Don't know how to program?</h1>
+        <h2>Want to test a clean HTML5 player?</h2>
+        <br>
+        <h1>The Clappr Player is Good. But,</h1>
+        <p>You needed to know how to program</p>
+        <p>To create a player, try the Embedded</p>
+        <p><span id="italic">Clappr Player</span> on this site</p>
+        <br>
+        <a href="shrink.html">Try it out!</a>
     </div>
-    <button id="clp">Try with Clappr player!</button>
-    <button id="load">Save & Load (Hls.js)</button>
 </body>
-
-<script>
-    const button = document.getElementById("load");
-    const btn2 = document.getElementById("clp");
-
-    button.addEventListener("click", () => {
-        var urlv = document.getElementById("udata").value;
-
-        const ec = encodeURIComponent(urlv);
-        window.location.href = `demo.html?urlf=${ec}`;
-    });
-
-    btn2.addEventListener("click", () => {
-        window.location.href = "clappr_ln.html";
-    });
-</script>
-
 </html>
