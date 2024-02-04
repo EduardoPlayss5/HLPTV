@@ -41,3 +41,5 @@ m3u8 (Recommended)
 # More
 if you want to see all your log, click in 'Show debug' to hide log: 'Hide debug'
 
+# Links
+<a href="https://eduardoplayss5.github.io/HLPTV/clappr.html">CLAPPR</a> <a href="clappr.io">Official Site</a>
